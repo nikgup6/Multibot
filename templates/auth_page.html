@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DocChat AI - Login & Signup</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 1000px;
+        min-height: 600px;
+        display: flex;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .left-panel,
+      .right-panel {
+        flex: 1;
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+
+      .left-panel {
+        background: linear-gradient(
+          135deg,
+          rgb(98, 132, 162) 0%,
+          rgb(40, 83, 86) 100%
+        );
+        color: white;
+      }
+
+      .right-panel {
+        background: white;
+      }
+
+      .panel-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .panel-header h2 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .panel-header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        color: #666;
+      }
+
+      .left-panel .panel-header p {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 0.95rem;
+      }
+
+      .left-panel .form-group label {
+        color: white;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .left-panel .form-group input {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #4facfe;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(79, 172, 254, 0.2);
+      }
+
+      .left-panel .form-group input:focus {
+        border-color: white;
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+      }
+
+      .form-group i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        margin-top: 12px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      .btn-login {
+        background: white;
+        color: #4facfe;
+        border: 2px solid white;
+      }
+
+      .btn-login:hover {
+        background: transparent;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
+      }
+
+      .btn-signup {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+      }
+
+      .btn-signup:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+      }
+
+      .divider {
+        text-align: center;
+        margin: 30px 0;
+        position: relative;
+      }
+
+      .divider::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: #e1e5e9;
+      }
+
+      .left-panel .divider::before {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .divider span {
+        background: white;
+        padding: 0 20px;
+        color: #999;
+        font-size: 0.9rem;
+      }
+
+      .left-panel .divider span {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .social-login {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-btn {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 600;
+      }
+
+      .left-panel .social-btn {
+        border-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      .social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .forgot-password {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .forgot-password a {
+        color: #4facfe;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .left-panel .forgot-password a {
+        color: white;
+      }
+
+      .forgot-password a:hover {
+        text-decoration: underline;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .left-panel .error-message {
+        color: #ffcccb;
+      }
+
+      .success-message {
+        color: #27ae60;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .loading {
+        display: none;
+        position: relative;
+      }
+
+      .loading::after {
+        content: "";
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ccc;
+        border-top: 2px solid #4facfe;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: translateY(-50%) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-50%) rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+          width: 95%;
+          max-width: 400px;
+        }
+
+        .left-panel,
+        .right-panel {
+          padding: 40px 30px;
+        }
+
+        .panel-header h2 {
+          font-size: 2rem;
+        }
+      }
+
+      .brand-logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .brand-logo i {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Login Panel (Left) -->
+      <div class="left-panel">
+        <div class="brand-logo">
+          <i class="fas fa-comments"></i>
+        </div>
+        <div class="panel-header">
+          <h2>Welcome Back!</h2>
+          <p>Sign in to continue your AI-powered document conversations</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" name="email" required />
+            <i class="fas fa-envelope"></i>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              required
+            />
+            <i class="fas fa-lock"></i>
+          </div>
+
+          <div class="error-message" id="loginError"></div>
+          <div class="success-message" id="loginSuccess"></div>
+
+          <button type="submit" class="btn btn-login">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+
+          <div class="forgot-password">
+            <a href="#" id="forgotPasswordLink">Forgot your password?</a>
+          </div>
+        </form>
+
+        <div class="divider">
+          <span>or continue with</span>
+        </div>
+
+        <div class="social-login">
+          <button class="social-btn" id="googleLogin">
+            <i class="fab fa-google"></i> Google
+          </button>
+          <button class="social-btn" id="githubLogin">
+            <i class="fab fa-github"></i> GitHub
+          </button>
+        </div>
+      </div>
+
+      <!-- Signup Panel (Right) -->
+      <div class="right-panel">
+        <div class="panel-header">
+          <h2>Create Account</h2>
+          <p>Join thousands of users who trust DocChat AI</p>
+        </div>
+
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" name="fullName" required />
+            <i class="fas fa-user"></i>
+          </div>
+
+          <div class="form-group">
+            <label for="signupEmail">Email Address</label>
+            <input type="email" id="signupEmail" name="email" required />
+            <i class="fas fa-envelope"></i>
+          </div>
+
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input
+              type="password"
+              id="signupPassword"
+              name="password"
+              required
+            />
+            <i class="fas fa-lock"></i>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              required
+            />
+            <i class="fas fa-lock"></i>
+          </div>
+
+          <div class="error-message" id="signupError"></div>
+          <div class="success-message" id="signupSuccess"></div>
+
+          <button type="submit" class="btn btn-signup">
+            <i class="fas fa-user-plus"></i> Create Account
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>or sign up with</span>
+        </div>
+
+        <div class="social-login">
+          <button class="social-btn" id="googleSignup">
+            <i class="fab fa-google"></i> Google
+          </button>
+          <button class="social-btn" id="githubSignup">
+            <i class="fab fa-github"></i> GitHub
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // API Configuration
+      const API_BASE_URL = "http://0.0.0.0:5000"; // Update this to match your Flask backend
+
+      // Form Elements
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const loginError = document.getElementById("loginError");
+      const loginSuccess = document.getElementById("loginSuccess");
+      const signupError = document.getElementById("signupError");
+      const signupSuccess = document.getElementById("signupSuccess");
+
+      // Utility Functions
+      function showError(element, message) {
+        element.textContent = message;
+        element.style.display = "block";
+        setTimeout(() => {
+          element.style.display = "none";
+        }, 5000);
+      }
+
+      function showSuccess(element, message) {
+        element.textContent = message;
+        element.style.display = "block";
+        setTimeout(() => {
+          element.style.display = "none";
+        }, 3000);
+      }
+
+      function setLoading(button, isLoading) {
+        if (isLoading) {
+          button.disabled = true;
+          button.style.opacity = "0.7";
+          button.classList.add("loading");
+        } else {
+          button.disabled = false;
+          button.style.opacity = "1";
+          button.classList.remove("loading");
+        }
+      }
+
+      // Password Validation
+      function validatePassword(password) {
+        const minLength = 8;
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+
+        if (password.length < minLength) {
+          return "Password must be at least 8 characters long";
+        }
+        if (!hasUpperCase || !hasLowerCase) {
+          return "Password must contain both uppercase and lowercase letters";
+        }
+        if (!hasNumbers) {
+          return "Password must contain at least one number";
+        }
+        return null;
+      }
+
+      // Login Form Handler
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        setLoading(submitButton, true);
+
+        const formData = new FormData(loginForm);
+        const loginData = {
+          email: formData.get("email"),
+          password: formData.get("password"),
+        };
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(loginData),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Store token in localStorage
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("userData", JSON.stringify(result.user));
+
+            showSuccess(loginSuccess, "Login successful! Redirecting...");
+
+            // Redirect to homepage after 1 second
+            setTimeout(() => {
+              window.location.href = "homepage.html";
+            }, 1000);
+          } else {
+            showError(
+              loginError,
+              result.message || "Login failed. Please try again."
+            );
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          showError(loginError, "Network error. Please check your connection.");
+        } finally {
+          setLoading(submitButton, false);
+        }
+      });
+
+      // Signup Form Handler
+      signupForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const submitButton = signupForm.querySelector('button[type="submit"]');
+        setLoading(submitButton, true);
+
+        const formData = new FormData(signupForm);
+        const password = formData.get("password");
+        const confirmPassword = formData.get("confirmPassword");
+
+        // Validate password
+        const passwordError = validatePassword(password);
+        if (passwordError) {
+          showError(signupError, passwordError);
+          setLoading(submitButton, false);
+          return;
+        }
+
+        // Check password confirmation
+        if (password !== confirmPassword) {
+          showError(signupError, "Passwords do not match");
+          setLoading(submitButton, false);
+          return;
+        }
+
+        const signupData = {
+          fullName: formData.get("fullName"),
+          email: formData.get("email"),
+          password: password,
+        };
+
+        try {
+          const response = await fetch(
+            `http://0.0.0.0:5000/api/auth/register`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(signupData),
+            }
+          );
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showSuccess(
+              signupSuccess,
+              "Account created successfully! Please login."
+            );
+            signupForm.reset();
+          } else {
+            showError(
+              signupError,
+              result.message || "Registration failed. Please try again."
+            );
+          }
+        } catch (error) {
+          console.error("Signup error:", error);
+          showError(
+            signupError,
+            "Network error. Please check your connection."
+          );
+        } finally {
+          setLoading(submitButton, false);
+        }
+      });
+
+      // Social Login Handlers (placeholder for now)
+      document.getElementById("googleLogin").addEventListener("click", () => {
+        // Implement Google OAuth login
+        alert("Google login will be implemented");
+      });
+
+      document.getElementById("githubLogin").addEventListener("click", () => {
+        // Implement GitHub OAuth login
+        alert("GitHub login will be implemented");
+      });
+
+      document.getElementById("googleSignup").addEventListener("click", () => {
+        // Implement Google OAuth signup
+        alert("Google signup will be implemented");
+      });
+
+      document.getElementById("githubSignup").addEventListener("click", () => {
+        // Implement GitHub OAuth signup
+        alert("GitHub signup will be implemented");
+      });
+
+      // Forgot Password Handler
+      document
+        .getElementById("forgotPasswordLink")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          // Implement forgot password functionality
+          alert("Forgot password functionality will be implemented");
+        });
+
+      // Check if user is already logged in
+      if (localStorage.getItem("authToken")) {
+        window.location.href = "homepage.html";
+      }
+    </script>
+  </body>
+</html>
